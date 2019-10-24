@@ -12,6 +12,7 @@ class NuevaCita extends Component {
         }
     }
 
+    //Cuando el usuario escribe en los inputs
     handleChange = e => {
         console.log('escribiendo...');
         console.log(e.target.name + ': '+e.target.value);
@@ -24,13 +25,47 @@ class NuevaCita extends Component {
         })
     }
 
+    //Cuando el usuario envía el formulario
+    handleSubmit = e => {  
+        e.preventDefault();
+        //extraer los valores del state
+        //const {mascota, propietario, fecha, hora, sintomas} = this.state.cita;
+        
+        //validar que los campos esten llenos
+        if(!this.existeCamposVacios(this.state.cita)){
+            console.log('BIEN!');
+        }
+        else{
+            console.error('NOOOOOOOOOOOO');
+        }
+        //Agregar la cita al state de App
+    }
+
+    existeCamposVacios = objeto => {
+        let estado = false;
+        let i = 0;
+        Object.keys(objeto).forEach(element => {
+            if(estado) return;
+            console.log(`elemento entrante ${element}: ${objeto[element]} `);
+            if(objeto[element] === '') {
+                estado = true;
+                return;
+            }
+            i++;
+        });
+        console.log('itnentos: '+i)
+        return estado;
+    }
+
   render() {
     return (
       <div className="card mt-5 py-5">
         <div className="card-body">
           <h2 className="card-title text-center mb-5">
               Llena el formulario para crear una nueva cita</h2>
-          <form>
+          <form
+            onSubmit={this.handleSubmit}
+          >
             <div className="form-group row">
               <label className="col-sm-4 col-lg-2 col-form-label">
                 Nombre Mascota
